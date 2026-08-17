@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2d6a4f" />
+  <meta name="description" content="Structured Slinger ball machine drills for 3.5 tennis players" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Court Focus" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <title>Court Focus — Tennis Drills</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Court Focus</h1>
+    <p>Slinger · 200–250 balls · 45–60 min · 3.5</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="active" data-tab="today" role="tab">Today</button>
+    <button data-tab="drills" role="tab">Drills</button>
+    <button data-tab="session" role="tab">Session</button>
+    <button data-tab="plan" role="tab">Weekly</button>
+  </nav>
+
+  <main>
+    <!-- TODAY -->
+    <section id="panel-today" class="panel active">
+      <p class="section-title">Suggested for today</p>
+      <div id="today-card"></div>
+      <div id="today-session"></div>
+      <button class="btn btn-primary" id="btn-start-today">Start Session</button>
+    </section>
+
+    <!-- DRILLS -->
+    <section id="panel-drills" class="panel">
+      <p class="section-title">Filter by focus area</p>
+      <div class="category-grid" id="drill-filters"></div>
+      <div id="drill-list"></div>
+    </section>
+
+    <!-- SESSION BUILDER -->
+    <section id="panel-session" class="panel">
+      <div class="ball-counter">
+        <div>
+          <div class="count" id="session-ball-count">240</div>
+          <div class="label">balls this session</div>
+        </div>
+        <div style="text-align: right">
+          <div class="count" id="session-drill-count">0</div>
+          <div class="label" id="session-hopper-label">hopper loads</div>
+        </div>
+      </div>
+
+      <p class="section-title">Quick templates</p>
+      <div id="template-list"></div>
+
+      <p class="section-title" style="margin-top: 1.5rem">Or build custom</p>
+      <div class="category-grid" id="session-filters"></div>
+      <button class="btn btn-secondary" id="btn-build-custom">Build Custom Session</button>
+
+      <div id="session-preview" style="margin-top: 1.5rem"></div>
+      <button class="btn btn-primary" id="btn-start-session" style="display: none">Start This Session</button>
+    </section>
+
+    <!-- WEEKLY PLAN -->
+    <section id="panel-plan" class="panel">
+      <p class="section-title">Weekly plan (2–3 machine days)</p>
+      <div id="weekly-plan"></div>
+      <p class="section-title" style="margin-top: 1.5rem">How this works</p>
+      <div class="card">
+        <ul class="focus-list">
+          <li>Only 2 or 3 Slinger sessions per week — not every day</li>
+          <li>Each session is ~200–250 balls (refill the 60-ball hopper 3–4 times)</li>
+          <li>Plan for 45–60 minutes — collect balls between hopper loads</li>
+          <li>Session 1 always prioritizes finishing points (your main habit fix)</li>
+          <li>Other days = rest or match play; still use the short-ball rule</li>
+          <li>Suggested days are flexible — tap a session whenever you get court time</li>
+        </ul>
+      </div>
+
+      <p class="section-title" style="margin-top: 1.5rem">Install on your phone</p>
+      <div class="card" id="install-help">
+        <p style="font-size:0.9rem;margin-bottom:0.75rem">
+          Add Court Focus to your home screen so it opens like an app at the court — no App Store needed.
+        </p>
+        <ul class="focus-list">
+          <li><strong>iPhone:</strong> Safari → Share button → Add to Home Screen</li>
+          <li><strong>Android:</strong> Chrome → menu (⋮) → Install app / Add to Home screen</li>
+        </ul>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem">
+          Open via a web address first (not a downloaded file), then install.
+        </p>
+        <button class="btn btn-secondary" id="btn-install" style="display:none;margin-top:0.75rem">Install Court Focus</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Active session bar -->
+  <div class="active-session-bar" id="active-bar">
+    <div style="min-width:0;flex:1">
+      <strong id="active-drill-name">Drill name</strong>
+      <div style="font-size: 0.75rem; opacity: 0.85" id="active-drill-progress">Ball 1 of 20</div>
+      <div style="font-size: 0.7rem; opacity: 0.75; margin-top: 0.15rem" id="active-refill-hint">Hopper 1/4</div>
+    </div>
+    <div style="display:flex;gap:0.4rem;flex-shrink:0">
+      <button id="btn-skip-drill" class="btn-bar-secondary">Next drill</button>
+      <button id="btn-next-ball">+1 Ball</button>
+    </div>
+  </div>
+
+  <!-- Drill detail modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal" id="modal-content"></div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
