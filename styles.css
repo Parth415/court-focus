@@ -332,6 +332,48 @@ main {
   white-space: nowrap;
 }
 
+.region-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.region-card {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 0.75rem;
+  border-left: 3px solid #ca6702;
+}
+
+.region-decision {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #ca6702;
+  margin-bottom: 0.35rem;
+}
+
+.region-pair {
+  font-size: 0.85rem;
+  margin-bottom: 0.15rem;
+}
+
+.region-place {
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+.region-tip {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+.drop-guide .card-title {
+  color: #ca6702;
+}
+
 .template-card h3 {
   font-size: 0.95rem;
   margin-bottom: 0.25rem;

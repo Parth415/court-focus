@@ -17,6 +17,129 @@ export const PLAYER_FOCUS = {
   cue: "Say out loud after every short ball: “Go.” Then approach.",
 };
 
+/**
+ * Drop-shot decision guide for match play.
+ * Regions = where YOU and the OPPONENT are on court when you choose the shot.
+ */
+export const DROP_SHOT_GUIDE = {
+  title: "When & where to drop",
+  summary:
+    "A drop shot is a change-of-pace weapon — not a default. Use it when they are deep and you are balanced. After a good drop, move forward; don’t watch.",
+  goldenRules: [
+    "Disguise: same prep as a drive, soft hands only at contact.",
+    "Prefer cross-court into the service box (more net + more court).",
+    "Best when opponent is deep behind the baseline — make them run forward.",
+    "If the ball is short and attackable, approach is often better than a soft drop.",
+    "After the drop: close in. Be ready for a put-away or first volley.",
+  ],
+  whenToPlay: [
+    {
+      title: "They are deep",
+      detail: "Opponent is behind the baseline (or recovering from a wide ball). Drop pulls them forward and opens the court.",
+    },
+    {
+      title: "You are balanced",
+      detail: "You are set, not stretched. Off-balance drops float and sit up — easy put-aways for them.",
+    },
+    {
+      title: "You have been driving deep",
+      detail: "2–3 deep balls first, then drop. The contrast makes the drop work.",
+    },
+    {
+      title: "Mid-court short ball (optional)",
+      detail: "You can drop OR approach. If they’re deep, angled drop works; if you want to finish, approach down the line.",
+    },
+  ],
+  whereToPlace: [
+    {
+      target: "Cross-court service box (near sideline)",
+      why: "Highest percentage. More clearance over the net, longer run for them.",
+    },
+    {
+      target: "Short and soft, with backspin",
+      why: "Second bounce should die inside the service box — not sit up mid-court.",
+    },
+    {
+      target: "Away from where they are recovering",
+      why: "If they are stuck in the ad corner, drop toward deuce (and vice versa).",
+    },
+    {
+      target: "Down-the-line drop (advanced)",
+      why: "Only when they are way off that side. Smaller margin — miss = free point.",
+    },
+  ],
+  regions: [
+    {
+      id: "you-mid-opp-deep",
+      you: "Inside service line / mid-court",
+      opponent: "Deep baseline",
+      decision: "Drop OR approach",
+      placement: "Cross-court short, or approach down the line then volley",
+      tip: "Best zone for a drop. Soft cross-court into the box, then move in. If the ball is high and sitty, approach instead.",
+    },
+    {
+      id: "you-base-opp-deep",
+      you: "Baseline, balanced",
+      opponent: "Deep / behind baseline",
+      decision: "Occasional drop",
+      placement: "Cross-court into service box, soft with spin",
+      tip: "Use after deep drives. Don’t drop every point — surprise is the weapon.",
+    },
+    {
+      id: "you-base-opp-neutral",
+      you: "Baseline",
+      opponent: "Also on baseline (neutral)",
+      decision: "Usually NO — drive deep",
+      placement: "Deep cross-court instead",
+      tip: "Neutral ball + drop often sits up. Build depth first; wait for a better look.",
+    },
+    {
+      id: "you-stretched",
+      you: "Wide / stretched / late",
+      opponent: "Anywhere",
+      decision: "Never drop",
+      placement: "High and deep (reset) or lob",
+      tip: "Off-balance drops are gifts. Survive first, then play the next ball.",
+    },
+    {
+      id: "opp-forward",
+      you: "Anywhere",
+      opponent: "Near service line or closing to net",
+      decision: "Never soft drop",
+      placement: "Passing shot (DTL or cross) or lob",
+      tip: "They’re already forward — a drop feeds them. Pass or lob over.",
+    },
+    {
+      id: "opp-at-net",
+      you: "Baseline or mid",
+      opponent: "At the net",
+      decision: "Pass or lob — not drop",
+      placement: "Down-the-line pass, sharp cross, or defensive lob",
+      tip: "Drop to a net player is their easiest volley. Change the height or go past them.",
+    },
+    {
+      id: "you-short-attackable",
+      you: "Short ball, you can step in",
+      opponent: "Deep",
+      decision: "Prefer approach; drop is Plan B",
+      placement: "Approach DTL deep, or angled drop if you want them scrambling",
+      tip: "For your game: default to “Go” and approach. Drop is the change-up when they’re glued deep.",
+    },
+  ],
+  neverDo: [
+    "Don’t drop when you’re stretched or late to the ball.",
+    "Don’t drop when they’re already inside the service line.",
+    "Don’t drop from way behind the baseline with no disguise (telegraphed floater).",
+    "Don’t hit a drop and stay glued to the baseline — follow it in.",
+    "Don’t overuse it; 1–3 well-timed drops per set beat 10 obvious ones.",
+  ],
+  afterDrop: [
+    "Split step and close toward the service line.",
+    "If they dig a weak reply → finish (volley or drive).",
+    "If they get there early and hit deep → recover and play the next ball; don’t force another drop.",
+  ],
+};
+
 export const DRILLS = [
   // ── FOREHAND ──
   {
@@ -452,8 +575,8 @@ export const DRILLS = [
     id: "dp-reaction",
     category: "drop",
     name: "Drop Shot Reaction",
-    balls: 20,
-    duration: "8 min",
+    balls: 40,
+    duration: "12 min",
     difficulty: "Intermediate",
     machine: {
       speed: "Alternating: deep 55% / short 30%",
@@ -462,22 +585,23 @@ export const DRILLS = [
       placement: "Alternate deep baseline and short mid-court",
       height: "Normal (deep), low (short)",
     },
-    focus: ["Read ball early", "Soft hands on short balls", "Disguise drop — same prep as drive"],
-    setup: "On short feed, play drop shot. On deep feed, rally cross-court.",
+    focus: ["Read region early", "Short ball: drop OR approach", "Deep ball: drive — no drop"],
+    setup: "Deep feed = drive cross-court. Short feed = decide drop vs approach before contact.",
     howTo: [
-      "Read early: if the feed is short, decide drop vs approach before contact.",
-      "Same prep as a drive so the drop is disguised.",
-      "Soft hands, open face slightly, land the ball in the service box with backspin.",
-      "After a good drop, move in — don’t watch. Be ready for the next ball.",
-      "If the drop sits up, treat the next ball as a finish opportunity at the net.",
+      "Call the region out loud before contact: “Deep — drive” or “Short — drop/go.”",
+      "Deep ball (they’re “deep”): never drop. Hit deep cross-court and recover.",
+      "Short ball (you mid-court, them deep): soft cross-court drop into the service box OR approach DTL.",
+      "Same prep as a drive so the drop is disguised; soften only at contact.",
+      "After every drop, take 2–3 steps forward — don’t admire.",
+      "If the drop sits up, finish the next ball at the net.",
     ],
   },
   {
     id: "dp-fh",
     category: "drop",
     name: "Forehand Drop from Baseline",
-    balls: 20,
-    duration: "7 min",
+    balls: 40,
+    duration: "12 min",
     difficulty: "Intermediate",
     machine: {
       speed: "Medium (50%)",
@@ -486,22 +610,49 @@ export const DRILLS = [
       placement: "Forehand corner",
       height: "Normal",
     },
-    focus: ["Same swing prep as topspin", "Soft grip at contact", "Land in service box, cross-court"],
-    setup: "Every 3rd ball is a drop shot. Other two are regular cross-court drives.",
+    focus: ["Drive–drive–drop pattern", "Land cross-court in service box", "Follow the drop in"],
+    setup: "Imagine opponent deep. Pattern: 2 deep drives, then 1 drop. Repeat.",
     howTo: [
-      "Pattern: drive, drive, drop. Keeps the drop unexpected.",
-      "Use the same unit turn as a normal forehand, then soften the grip at contact.",
-      "Aim cross-court into the service box — more net and court to work with.",
-      "If you’re off-balance, skip the drop and drive deep instead.",
-      "Drop is a change-up; still look to finish the next ball forward when they dig it up.",
+      "Region: you baseline + balanced, opponent deep behind baseline.",
+      "Balls 1–2: deep cross-court drives (build the point).",
+      "Ball 3: same unit turn, soft grip at contact — drop cross-court into the service box near the sideline.",
+      "Target: first bounce in the box, second bounce dies — not a mid-court sit-up.",
+      "If you’re late or stretched on ball 3, skip the drop and drive deep instead.",
+      "After the drop, close to the service line for the reply.",
+    ],
+  },
+  {
+    id: "dp-regions",
+    category: "drop",
+    name: "Drop by Court Region",
+    balls: 40,
+    duration: "14 min",
+    difficulty: "Intermediate",
+    machine: {
+      speed: "Medium (50%) with some short feeds",
+      spin: "Light topspin",
+      feed: "3.5 sec interval",
+      placement: "Mix deep baseline and short mid-court",
+      height: "Normal / low on short",
+    },
+    focus: ["Decide by where you and they are", "Know when NOT to drop", "Place cross-court short"],
+    setup: "Before each ball, pick a region scenario and play the correct decision (see Drop guide).",
+    howTo: [
+      "Cycle these scenarios (say them out loud):",
+      "1) You mid + they deep → drop cross-court short OR approach.",
+      "2) You baseline + they deep → occasional drop after deep balls.",
+      "3) Neutral baseline both → drive deep — no drop.",
+      "4) You stretched → high deep reset — no drop.",
+      "5) They closing / at net → pass or lob — no drop.",
+      "Score yourself: correct decision matters more than a pretty drop.",
     ],
   },
   {
     id: "dp-passing",
     category: "drop",
-    name: "Drop-Shot / Passing Pattern",
-    balls: 20,
-    duration: "8 min",
+    name: "Drop then Pass (They Closed)",
+    balls: 40,
+    duration: "12 min",
     difficulty: "Advanced",
     machine: {
       speed: "Slow-medium (45%)",
@@ -510,14 +661,15 @@ export const DRILLS = [
       placement: "Mid-court neutral balls",
       height: "Normal",
     },
-    focus: ["Drop when imaginary opponent at net", "Passing shot down the line on next ball", "Change pace effectively"],
-    setup: "Alternate: drop shot, then drive passing shot. Simulates cat-and-mouse at net.",
+    focus: ["Drop pulls them forward", "Next ball: pass or lob", "Don’t drop to a net player"],
+    setup: "Ball 1: drop (they were deep). Ball 2: they’re now forward — pass DTL or lob.",
     howTo: [
-      "Ball 1: drop as if they’re at net — pull them forward.",
-      "Ball 2: drive a passing shot (down the line or lob) as if they closed.",
-      "This trains changing pace so you’re not stuck in baseline grind mode.",
-      "When YOU are the one who approached, remember: first volley deep, then put-away.",
-      "Use drops sparingly in matches; combine with approaching on short balls.",
+      "Region shift: after your drop, they move from deep → service line / net.",
+      "Ball 1: soft cross-court drop (they deep).",
+      "Ball 2: they are forward — do NOT drop again. Hit a passing shot or lob.",
+      "Passing options: down the line past them, or sharp cross-court at their feet only if low.",
+      "This is match reality: drop is one shot; the next decision is usually pass/lob/finish.",
+      "When YOU are the one at net after an approach, first volley deep middle.",
     ],
   },
 

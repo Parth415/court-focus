@@ -6,6 +6,7 @@ import {
   OFF_DAY,
   HOPPER_SIZE,
   SESSION_BALL_TARGET,
+  DROP_SHOT_GUIDE,
   getSchedule,
   getSessionForDay,
   getDrillById,
@@ -98,6 +99,14 @@ function renderDrillDetail(drill) {
     ${
       drill.finishesPoint
         ? `<div class="tip-callout tip-callout-accent"><strong>Short-point cue:</strong> ${PLAYER_FOCUS.cue}</div>`
+        : ""
+    }
+    ${
+      drill.category === "drop"
+        ? `<div class="tip-callout" style="margin-bottom:0.75rem">
+            <strong>Match cue:</strong> Drop when they are deep and you are balanced. Place cross-court in the service box. Never drop when stretched or when they are already forward.
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.35rem">Full region guide: Drills tab → Drop Shots</p>
+          </div>`
         : ""
     }
     <p class="section-title">How to play this drill</p>
@@ -241,10 +250,62 @@ function renderDrillFilters() {
     ).join("");
 }
 
+function renderDropGuide() {
+  const g = DROP_SHOT_GUIDE;
+  const regions = g.regions
+    .map(
+      (r) => `
+      <div class="region-card">
+        <div class="region-decision">${r.decision}</div>
+        <div class="region-pair"><strong>You:</strong> ${r.you}</div>
+        <div class="region-pair"><strong>Them:</strong> ${r.opponent}</div>
+        <div class="region-place"><strong>Place:</strong> ${r.placement}</div>
+        <p class="region-tip">${r.tip}</p>
+      </div>`
+    )
+    .join("");
+
+  return `
+    <div class="card drop-guide" style="margin-bottom:1rem">
+      <div class="card-title">${g.title}</div>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin:0.5rem 0">${g.summary}</p>
+
+      <p class="section-title">Golden rules</p>
+      <ul class="focus-list">${g.goldenRules.map((x) => `<li>${x}</li>`).join("")}</ul>
+
+      <p class="section-title" style="margin-top:1rem">When to play it</p>
+      ${g.whenToPlay
+        .map(
+          (w) => `
+        <div style="margin-bottom:0.55rem">
+          <strong style="font-size:0.9rem">${w.title}</strong>
+          <p style="font-size:0.85rem;color:var(--text-muted)">${w.detail}</p>
+        </div>`
+        )
+        .join("")}
+
+      <p class="section-title" style="margin-top:1rem">Where to place it</p>
+      <ul class="focus-list">
+        ${g.whereToPlace.map((w) => `<li><strong>${w.target}:</strong> ${w.why}</li>`).join("")}
+      </ul>
+
+      <p class="section-title" style="margin-top:1rem">By court region</p>
+      <div class="region-grid">${regions}</div>
+
+      <p class="section-title" style="margin-top:1rem">Never do this</p>
+      <ul class="focus-list">${g.neverDo.map((x) => `<li>${x}</li>`).join("")}</ul>
+
+      <p class="section-title" style="margin-top:1rem">After the drop</p>
+      <ul class="focus-list">${g.afterDrop.map((x) => `<li>${x}</li>`).join("")}</ul>
+    </div>`;
+}
+
 function renderDrillList() {
   const list = document.getElementById("drill-list");
   const drills = state.drillFilter ? getDrillsByCategory(state.drillFilter) : DRILLS;
-  list.innerHTML = drills.map((d) => renderDrillCard(d, { showCategory: !state.drillFilter })).join("");
+  const guide = state.drillFilter === "drop" ? renderDropGuide() : "";
+  list.innerHTML =
+    guide + drills.map((d) => renderDrillCard(d, { showCategory: !state.drillFilter })).join("");
 }
 
 function renderSessionFilters() {

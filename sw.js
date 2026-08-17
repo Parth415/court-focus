@@ -1,4 +1,4 @@
-const CACHE_NAME = "court-focus-v5";
+const CACHE_NAME = "court-focus-v6";
 const ASSETS = [
   "./",
   "./index.html",
