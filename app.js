@@ -261,15 +261,33 @@ function renderTemplates() {
   const container = document.getElementById("template-list");
   container.innerHTML = SESSION_TEMPLATES.map((t) => {
     const meta = formatSessionMeta(t.blocks, t.duration);
+    const selected = state.selectedTemplate === t.id;
+    const drillPreview = selected
+      ? `<div class="template-drill-preview">
+          ${t.blocks
+            .map((block, i) => {
+              const drill = getDrillById(block.drillId);
+              if (!drill) return "";
+              return `<div class="template-drill-row">
+                <span class="template-drill-num">${i + 1}</span>
+                <span class="template-drill-name">${drill.name}</span>
+                <span class="template-drill-balls">${block.balls}</span>
+              </div>`;
+            })
+            .join("")}
+        </div>`
+      : `<p class="template-hint">Tap to expand drills</p>`;
+
     return `
-    <div class="card template-card ${state.selectedTemplate === t.id ? "selected" : ""}" data-template="${t.id}">
+    <div class="card template-card ${selected ? "selected" : ""}" data-template="${t.id}">
       <h3>${t.name}</h3>
       <p>${t.description}</p>
-      <div class="meta-row" style="margin-top:0.5rem;margin-bottom:0">
+      <div class="meta-row" style="margin-top:0.5rem;margin-bottom:0.35rem">
         <span>${meta.balls} balls</span>
         <span>${meta.hoppers} hoppers</span>
         <span>${t.duration}</span>
       </div>
+      ${drillPreview}
     </div>`;
   }).join("");
 }
@@ -279,8 +297,8 @@ function renderSessionPreview() {
   const btnStart = document.getElementById("btn-start-session");
   preview.innerHTML =
     state.sessionBlocks.length > 0
-      ? `<p class="section-title">Your session</p>${renderSessionBlocks(state.sessionBlocks)}`
-      : "";
+      ? `<p class="section-title">Session plan &amp; refill points</p>${renderSessionBlocks(state.sessionBlocks)}`
+      : `<div class="empty-state">Tap a template above to see its drills here.</div>`;
   btnStart.style.display = state.sessionBlocks.length > 0 ? "block" : "none";
 
   const total = getSessionBalls(state.sessionBlocks);
@@ -488,6 +506,7 @@ document.getElementById("template-list").addEventListener("click", (e) => {
   state.sessionBlocks = getTemplateBlocks(card.dataset.template);
   renderTemplates();
   renderSessionPreview();
+  document.getElementById("session-preview")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
 });
 
 document.getElementById("btn-build-custom").addEventListener("click", () => {
